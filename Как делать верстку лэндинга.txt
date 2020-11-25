@@ -1,0 +1,1684 @@
+https://www.youtube.com/watch?v=Q2zxQNQGcU8&ab_channel=%D0%9E%D1%820%D0%B4%D0%BE1
+
+
+О css
+Для всех тэгов задаем 
+
+*{
+	box-sizing: border-box;
+}
+
+Также создаем класс .container который будем всему присваивать. Он содержит в себе размер блока и центрует
+
+.container {
+	max-width: 1170px;
+	margin: 0 auto;
+	padding: 0 15px;
+}
+
+Для ссылок навигации и всякого такого прописываем 
+
+a {
+	display: inline-block;
+	text-decoration: none;
+}
+
+Для звонка по нажатию на телефон в ссылке в href пишем 
+
+<a class="header__phone" href="tel:89128539823">8 912 853 98 23</a>
+
+Проходим по макету и смотри шрифты и находим их тут же в гугл фонтс (нужно указать cyrilic при выборе шрифтов)
+копируем линк 
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+Также еопируем css правила 
+font-family: 'PT Serif', serif;
+font-family: 'Roboto', sans-serif;
+ и прописываем главный шрифт для всего бади, а второй будем назначать по необходимости
+ также поступаем и с размеров шрифта и межстрочным расстоянием. Выставляем средни по больнице для всего проекта
+
+ Для стилизации ссылок-кнопок используем примерно такой вариант:
+ .header__btn {
+	float: right;
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	line-height: 36px;
+	color: #1b1b1b;
+	background-color: #ffc222;
+	padding: 5px 20px 4px 50px;
+}
+
+При добавлении отступов при наличии картинки значка (тел трубка или еще что) эту картинку не учитываем и измеряем именно расстояние
+до самого текста
+
+Так как кнопка float то она обтекаемая и может выходить за границы блока. Сначала прописываем для родителского элемента, того где они все лежат, лучше создать новый div
+
+.header__btn:after {
+	content: "";
+	clear: both;
+	display: block;
+}
+
+Если в строке идут ссылки и еще кнопка, то чтобы их выровнять можно указать одинаковую высоту строки
+line-height: 45px;
+
+Для вставки изображений к ссылкам (значек трубки, письма и тд) на макете меряем расстояние и выставляем падинги без учета изображений
+(типо оставляем для них место пустое)
+
+Верхняя часть готова
+Теперь идем делать лого
+
+Измеряем в макете паддинги беленькой части и прописываем их для блока header__content
+
+.header__content{
+	padding: 34px 0px 23px;
+}
+
+Далее делаем горизонтальное меню из li (весь список обернут в menu)
+
+.menu li {
+	display: inline-block;
+}
+
+В целом у нас блок с логотипом в одной стороне и блок с меню в другой.
+Для того чтоы раскидать его по разным углам (типо float) мы будем использовать flex.
+Обернем и блок лого и меню в контейнера в див header__content-inner и для него прописываем 
+
+.header__content-inner {
+	display: flex;                            ///делает весь блок flex
+	justify-content: space-between;            /// раскидывает внутренние блоки по разным сторонам как float
+}
+
+Далее делаем ссылки меню (те что справа)
+Редактируем вид ссылок 
+.menu a {
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	color: #323232;
+	line-height: 36px;
+	border: 1px solid transparent;   ////// делаем прозрачным и резервируем место, а потом при ховере пишем цвет
+	так делаем чтобы при ховере ничего не дергалось из за появления новых отступов бордера
+	padding: 0px 16px;
+	transition: all .3s;  // замедление эффекта рамочки
+}
+
+Затем измеряем расстояние в макете и делаем следующее 
+.menu li + li {
+	padding-left: 10px;
+}
+То есть мы применяем отступ для всех li начиная со второго
+
+Добавляем эффект hover на рамку меню 
+
+Далее вставим иконки значков трубки и тд
+Идем на сайт icomoon.io . В фотошопе при двойном клике перемещением показывает FontAwesom и шрифт ссылки. Первое это название набора значков, поэтому на сайте ищем его и добавляем к бесплатным (нажать правый верхний угол, потом прокрутить вниз и найти из предложенных) Потом просто отмечаем значки которые нужны (можно отсеивать по названию поиском)
+
+Нажимаем скачать, получаем архив
+Из него вытаскиваем папку fonts и style.css (переименовываем его на font.css и кидаем в папку css)
+Потом подключаем css файлик
+<link rel="stylesheet" href="css/fonts.css">
+
+Открываем в редакторе fonts.css 
+Проверяем правильность пути в первом элементе везде надо поставить выход из папки назад ../
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?wfq3mh');
+  src:  url('fonts/icomoon.eot?wfq3mh#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?wfq3mh') format('truetype'),
+    url('fonts/icomoon.woff?wfq3mh') format('woff'),
+    url('fonts/icomoon.svg?wfq3mh#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+стало так 
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?wfq3mh');
+  src:  url('../fonts/icomoon.eot?wfq3mh#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?wfq3mh') format('truetype'),
+    url('../fonts/icomoon.woff?wfq3mh') format('woff'),
+    url('../fonts/icomoon.svg?wfq3mh#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+
+Теперь можно вставлять значки. Находим класс конкретной ссылки и после него пишем класс:before. Например для телефона так, для других
+таким же способом. В before мы пишем content: "ищем значение в fonts.css для телефончика" и font-family: "icomoon";
+
+.header__phone {
+	padding-left: 20px;
+	padding-right: 30px;
+}
+
+.header__phone:before {
+	content: "\f095";
+	font-family: 'icomoon';
+}
+
+Теперь прописываем для родителя, то есть для .header__phone     position: relative; 
+А для .header__phone:before  position: absolute; ну и сразу цвет color и еще left: 0;
+
+.header__phone {
+	padding-left: 20px;
+	padding-right: 30px;
+}
+
+.header__phone:before {
+	content: "\f095";
+	font-family: 'icomoon';
+	position: absolute;
+	left: 0;
+	color: #ffc222;
+}
+
+Для кнопки справа у кейса отступ больше поэтому там left: 22px;
+
+
+Далее сделаем всплывающее окно при нажатии на кнопку бесплатная консультация. Сделаем с помощью плагина fancybox.
+Из архива выбираем из папки dist файлы jquery.fancybox.min.css (кидаем в папку с css) и jquery.fancybox.min.js (создаем папку js)
+В html файле подключаем css
+<link rel="stylesheet" href="css/jquery.fancybox.min.css">
+Подключаем jquery через google cdn и наш файлик js 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="js/jquery.fancybox.min.js"></script>	
+И создаем свой js файл main.js
+
+<script src="js/main.js"></script>	
+
+Далее в документации смотрим то что нам нужно, открываем демо и смотрим что нужно добавить к ссылке чтобы запустить плагин
+В нашем случае ссылка запускающая модальное окно должна выглядеть так 
+<a data-fancybox data-src="#modal" href="javascript:;" class="btn btn-primary">Open demo</a>
+То есть добавляем нашей кнопке Бесплатная консультация эти атрибуты
+
+<a class="header__btn" data-fancybox data-src="#modal" href="javascript:;" class="btn btn-primary">Бесплатная консультация</a>
+
+Для того чтобы определить пояаляющееся окошео задаем ему нужный id как в демо 
+
+        <div style="display: none;" id="modal">
+          <h2>Hello!</h2>
+          <p>You are awesome!</p>
+        </div>
+
+Берем прям все, вставляем в самый конец html и начинаем редактировать      
+
+style="display: none;" перемещаем в css. Обращаемся через id
+Вернемся к нему попозже
+
+
+Береходим к следующему блоку
+
+Это блок со слайдером в котором изображение статично и меняется только контент
+Первым делом выбираем изображение из макета, экспортировать в формате jpg под название slider-fon  
+
+Теперь после тегэ header создаем следующую секцию
+
+		<section class="slider">
+			<div class="container"> /////////// задаем блоку наши стандартные размеры
+				<div class="slider__inner"> //////////это обертка слайдера
+					<div class="slider__item"> ////////// это один пост в слайдере
+						<div class="slider__title">
+						КОМПЛЕКСНОЕ ЗАКРЫТИЕ ПРЕДПРИЯТИЯ	
+						</div>
+
+						<div class="slider__text">
+						Полное прекращение существования юридического лица с сохранением легальности всей предыдущей деятельности.	
+						</div>
+
+						<div class="slider__btn">
+						Оставить заявку	
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+Текст переносим с макета	
+Теперь сделаем несколько постов в слайдере скопировав slider__item
+
+<section class="slider">
+			<div class="container">
+				<div class="slider__inner">
+					<div class="slider__item">
+						<div class="slider__item-content">
+						<div class="slider__title">
+						КОМПЛЕКСНОЕ ЗАКРЫТИЕ ПРЕДПРИЯТИЯ	
+						</div>
+
+						<div class="slider__text">
+						Полное прекращение существования юридического лица с сохранением легальности всей предыдущей деятельности.	
+						</div>
+
+						<a class="slider__btn">
+						Оставить заявку	
+						</a>
+					</div>
+					</div>
+
+					<div class="slider__item">
+						<div class="slider__item-content">
+						<div class="slider__title">
+						КОМПЛЕКСНОЕ ЗАКРЫТИЕ ПРЕДПРИЯТИЯ	
+						</div>
+
+						<div class="slider__text">
+						Полное прекращение существования юридического лица с сохранением легальности всей предыдущей деятельности.	
+						</div>
+
+						<a class="slider__btn">
+						Оставить заявку	
+						</a>
+					</div>
+					</div>
+
+					<div class="slider__item">
+						<div class="slider__item-content">
+						<div class="slider__title">
+						КОМПЛЕКСНОЕ ЗАКРЫТИЕ ПРЕДПРИЯТИЯ	
+						</div>
+
+						<div class="slider__text">
+						Полное прекращение существования юридического лица с сохранением легальности всей предыдущей деятельности.	
+						</div>
+
+						<a class="slider__btn">
+						Оставить заявку	
+						</a>
+					</div>
+					</div>
+
+
+				</div>
+			</div>
+		</section>
+
+
+Переходим в css  и начинаем прописывать стили классу slider
+
+.slider {
+	background-image: url(../img/slider-fon.jpg); //// задний фон
+	background-repeat: no-repeat; /// без повторений
+	background-size: cover;  /// растягивается на весь блок
+	background-position: center; //// позиция
+	min-height: 500px; ///мин высота
+}	
+
+
+Теперь для создания слайдера используем плагин slick slider  
+Качаем, открываем архив и берем slick.css  и slick.min.js
+Раскидываем их по папкам и Подключаем
+<link rel="stylesheet" href="css/slick.css">
+<script src="js/slick.min.js"></script>
+
+Идем в наш main.js и прописыватьисываем
+
+$(function(){
+	$(".slider__inner").slick();
+
+});
+
+Начинаем работать над slider__item slider__title slider__text и slider__btn , то есть визуалить наши посты в слайдере
+
+Для нормального отображения завернем наши посты в еще один див slider__item-content
+Для кнопки со всплывающим окном копируем стиль с модального окна бесплатной консультации
+
+<a data-fancybox data-src="#modal" href="javascript:;" class="slider__btn">Оставить заявку<a>
+
+Так как стрелочек будет много делаем отдельный класс под нее default-btn и запихиваем стрелку на кнопке оставить заявку туда
+
+Получаем три таких вот блока 
+
+					<div class="slider__item">
+						<div class="slider__item-content">
+						<div class="slider__title">
+						КОМПЛЕКСНОЕ ЗАКРЫТИЕ ПРЕДПРИЯТИЯ	
+						</div>
+
+						<div class="slider__text">
+						Полное прекращение существования юридического лица с сохранением легальности всей предыдущей деятельности.	
+						</div>
+
+						<a data-fancybox data-src="#modal" href="javascript:;" class="slider__btn default-btn">
+						Оставить заявку	
+						</a>
+					</div>
+					</div>
+
+И стили к ним 
+
+
+.slider {
+	background-image: url(../img/slider-fon.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	min-height: 500px;
+}
+
+.slider__item-content {
+	text-align: center;
+	padding-top: 110px;
+	max-width: 650px;
+	margin: 0 auto;
+}
+
+.slider__title {
+	text-transform: uppercase;
+	font-size: 30px;
+	line-height: 36px;
+	color: #fff;
+	font-weight: 500px;
+	letter-spacing: 0.5px; 
+	margin-bottom: 22px;
+	font-family: 'Roboto', sans-serif;
+}
+
+.slider__text {
+	font-family: 'Roboto', sans-serif;
+	font-size: 18px;
+	color: #d3d2d2;
+	margin-bottom: 50px;
+	line-height: 24px;
+}
+
+.slider__btn {
+	
+}
+
+.default-btn {
+	color: #fff;
+	font-size: 14px;
+	line-height: 24px;
+	font-weight: 500px;
+	font-family: 'Roboto', sans-serif;
+	padding: 8px 30px 8px 24px;
+	border: 1px solid #ffc222;
+	border-right-width: 20px;
+	position: relative;
+}	
+
+.default-btn:after {
+	content: "\f105";
+	font-family: 'icomoon' !important;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	right: -12px;
+}
+
+
+Теперь делаем кнопки вправо и влево. Переходим в наш js файл и продолжим настраивать плагин slick-slider (инфу можно взять в документации к нему). В документации находим как задать кнопки вперед и назад. Это мы типо как бы объект передаем в параметрах.
+
+Назначаем сразу класс этим кнопкам чтобы стилизовать
+
+$(function(){
+	$(".slider__inner").slick({
+		nextArrow: '<button type="button" class="slick-btn slick-next"></button>',
+		prevArrow: '<button type="button" class="slick-btn slick-prev"></button>',
+	});
+
+});					
+
+Прописываем стили для стрелочек-кнопок 
+
+.slider__inner {
+	position: relative;
+}
+
+.slick-btn {
+	position: absolute;
+	top: 70%;
+	z-index: 3;
+	width: 40px;
+	height: 40px;
+	border: 1px solid #fff;
+	background-color: transparent;
+	cursor: pointer;
+	outline: none;
+	background-color: #ffc222;
+}
+
+///// это все стрелочки. Типо создаем элемент до кнопки и задаем ему характеристики
+.slick-btn:before {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-family: 'icomoon' !important;
+	color: #fff;
+}
+
+////////// это конкретно стрелка вправо. Ссылается на тот же before что и общий бефор, но уже конкретно от кнопки некст
+.slick-next:before {
+	content: "\f105";
+}
+
+/////////// также влево
+.slick-prev:before {
+	content: "\f104";
+}
+
+///////// позиционирование кнопок
+.slick-next {
+	right: 0;
+}
+
+.slick-prex {
+	left: 0;
+}
+
+Чтобы невозможно было прокручивать бесконечно ищем в документации к плагину этот параметр объекта который мы передаем
+
+$(function(){
+	$(".slider__inner").slick({
+		nextArrow: '<button type="button" class="slick-btn slick-next"></button>',
+		prevArrow: '<button type="button" class="slick-btn slick-prev"></button>',
+		infinite: false, ЭТОТ !!!!!!!!!!!!!!!!!!
+	});
+
+});
+
+Теперь смотрим на страницу. Когда стрелка перестает работать у нее добавляется класс slick-disabled
+
+в стилях пропишем, что если встречаются два класса .slick-btn.slick-disabled то у нас становится прозрачным фон (нужно перенести transperent из .slick-btn туда, и курсор перестает быть рукой)
+
+.slick-btn .slick-disabled {
+	background-color: transparent;
+	cursor: default;
+}
+
+ИТОГОВЫЕ СТИЛИ ДЛЯ КНОПОК 
+
+.slider__inner {
+	position: relative;
+}
+
+.slick-btn {
+	position: absolute;
+	top: 70%;
+	z-index: 3;
+	width: 40px;
+	height: 40px;
+	border: 1px solid #fff;
+	cursor: pointer;
+	outline: none;
+	background-color: #ffc222;
+}
+
+.slick-btn.slick-disabled {
+	background-color: transparent;
+	cursor: default;
+}
+
+.slick-btn:before {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-family: 'icomoon' !important;
+	color: #fff;
+}
+
+
+.slick-next:before {
+	content: "\f105";
+}
+
+.slick-prev:before {
+	content: "\f104";
+}
+
+
+.slick-next {
+	right: 0;
+}
+
+.slick-prex {
+	left: 0;
+}
+
+Идем дальше
+Смотрим макет
+Пишем и заполняем html скелет, а потом стилизуем. Сразу же заполняем текстом с макета
+
+<section class="about">
+			<div class="container">
+				<div class="about__top">
+					<div class="about__title-box">
+						<div class="about-title">
+							Наши услуги
+						</div>
+						<div class="about__text">
+							Комплексный подход к вашему вопросу, своевременная правовую помощь, представление интересов во всех судебных инстанциях.
+						</div>
+					</div>
+					<div class="about__btn">
+					<a href="#">
+						Показать все услуги
+					</a>
+					</div>
+				</div>
+				<div class="about__items">
+					<div class="about__item">
+						<img src="img/about-1.png" alt="">
+						<div class="about__item-title">
+							Банкротство и ликвидация
+						</div>
+						<div class="about__item-text">
+							Полное прекращение существования юридического лица с сохранением легальности всей предыдущей деятельности
+						</div>
+						<div class="about__item-btn">
+							<a class="about__item-link" href="#">Подробнее</a>
+							<a data-fancybox data-src="#modal" href="javascript:;" class="default-btn">
+								Заказать
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="about__items">
+					<div class="about__item">
+						<img src="img/about-2.png" alt="">
+						<div class="about__item-title">
+							Адвокатское сопровождение
+						</div>
+						<div class="about__item-text">
+							Мы гарантируем полное профессиональное обслуживание клиентов в заявленных сферах деятельности и соблюдение конфиденциальности.
+						</div>
+						<div class="about__item-btn">
+							<a class="about__item-link" href="#">Подробнее</a>
+							<a data-fancybox data-src="#modal" href="javascript:;" class="default-btn">
+								Заказать
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="about__items">
+					<div class="about__item">
+						<img src="img/about-3.png" alt="">
+						<div class="about__item-title">
+							Налоговый аудит
+						</div>
+						<div class="about__item-text">
+							Налоговый аудит проводят перед проведением налоговых проверок; при оценке возможных налоговых рисков; при оптимизации налогообложения.
+						</div>
+						<div class="about__item-btn">
+							<a class="about__item-link" href="#">Подробнее</a>
+							<a data-fancybox data-src="#modal" href="javascript:;" class="default-btn">
+								Заказать
+							</a>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</section>
+
+
+	Для кнопок используем нашу старую ссылку со стилем, только уберем один класс если будем копировать 
+
+	<a data-fancybox data-src="#modal" href="javascript:;" class="default-btn">
+								Заказать
+							</a>	
+
+
+Теперь стилизуем 
+
+Задаем отступы всей секции		
+Для верхней части прописываем 
+.about__top{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 60px;
+}
+Раскидываем текст с заголовком и кнопку в разные стороны
+
+оставляем место для желтой линии, а также задаем величину
+
+.about__title-box{
+	max-width: 520px;
+	padding-left: 140px;
+	position: relative;
+}					
+
+И рисуем нашу линию 
+
+.about__title-box:before{
+	content:"";            //////////ОБЯЗАТЕЛЬНО ПИШЕМ ЕСЛИ ИСПОЛЬЗУЕМ before
+	position: absolute;
+	width: 105px;
+	height: 2px;
+	background-color:#ffc222;
+	left:0;
+	top: 11px;
+}
+
+Задаем стили для заголовка и текста и кнопки (берем с макета)
+
+.about-title {
+	font-size: 24px;
+	font-weight: 500;
+	font-family: 'Roboto', sans-serif;
+	line-height: 24px;
+	color:#212020;
+	margin-bottom: 10px;
+
+
+}
+
+.about__text {
+	letter-spacing: 0.1px;
+}
+
+.about__btn a{
+	color: #373636;
+	line-height: 24px;
+	letter-spacing: 0.25px;
+	padding: 5px 38px;
+	border: 3px solid #e6e6e6;
+}
+
+
+Из за displey flex бордер у кнопки расширяется на весь блок, поэтому мы сделали так 
+
+					<div class="about__btn">
+					<a href="#">
+						Показать все услуги
+					</a>
+					</div>
+
+Теперь делаем наши блоки
+Задаем что можем с макета
+Также распределяем контент с помощью flex и уже на три блока сразу
+
+Проблема когда кнопки расположены на разных уровнях из за разного количества контента до них решается тем что мы позиционируем их абсолютно about__item родитель 	position: relative;
+
+.about__item-btn {
+ position: absolute;
+ bottom: 40px;
+}
+
+Стилим ссылку и кнопки
+Для подчеркивания ссылки используем border bottom чтобы не было пробелов в подчеркивании под "д"
+
+Чтобы центрировать ссылку с кнопкой ставим им left 0 right 0 и так как они абсолютны, то встают посередине блока
+и отталкиваем ссылку маргином
+.about__item-link {
+	color: #050505;
+	font-family: 'Roboto', sans-serif;
+	border-bottom: 1px solid #050505;
+	margin-right: 60px;
+}
+
+И наконец вставляем тень
+
+Тень можно скопировать с макета прямо css кодом. Для этого выделяем весь блок, нажимаем правой кнопкой и выбираем копировать css
+.Прямоугольник_32 {
+  background-color: rgb(249, 249, 249);
+  box-shadow: 0px 7px 24.3px 2.7px rgba(91, 89, 89, 0.14);
+  position: absolute;
+  left: 389px;
+  top: 848px;
+  width: 360px;
+  height: 363px;
+  z-index: 61;
+}
+
+и отсюда выбираем что нам нужно
+  box-shadow: 0px 7px 24.3px 2.7px rgba(91, 89, 89, 0.14);
+
+
+ Итоговые стили выглядят так
+
+.about {
+	padding: 50px 0px 30px 0px;
+}
+
+.about__top{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 60px;
+}
+
+.about__title-box{
+	max-width: 520px;
+	padding-left: 140px;
+	position: relative;
+}
+
+.about__title-box:before{
+	content:"";
+	position: absolute;
+	width: 105px;
+	height: 2px;
+	background-color:#ffc222;
+	left:0;
+	top: 11px;
+}
+
+.about-title {
+	font-size: 24px;
+	font-weight: 500;
+	font-family: 'Roboto', sans-serif;
+	line-height: 24px;
+	color:#212020;
+	margin-bottom: 10px;
+
+
+}
+
+.about__text {
+	letter-spacing: 0.1px;
+}
+
+.about__btn a{
+	color: #373636;
+	line-height: 24px;
+	letter-spacing: 0.25px;
+	padding: 5px 38px;
+	border: 3px solid #e6e6e6;
+}
+
+.about__items {
+	display: flex;
+	justify-content: space-between;
+}
+.about__item {
+	max-width: 360px;
+	text-align: center;
+	padding: 30px 0 80px;
+	position: relative;
+	min-height: 375px;
+	background-color: #f9f9f9;
+	box-shadow: 0px 7px 24.3px 2.7px rgba(91, 89, 89, 0.14);
+}
+
+.about__item-title {	
+	color: #212020;
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 24px;
+	font-family: 'Roboto', sans-serif;
+	padding: 24px 0;
+}
+
+.about__item-text {
+	letter-spacing: 0.1px;
+	padding: 0 35px 30px;
+}
+
+.about__item-btn {
+ position: absolute;
+ bottom: 40px;
+ left: 0;
+ right: 0;
+}
+
+.about__item-btn .default-btn {
+	color: #373636;
+}
+
+.about__item-btn .default-btn:after {
+	color: white;
+}
+
+.about__item-link {
+	color: #050505;
+	font-family: 'Roboto', sans-serif;
+	border-bottom: 1px solid #050505;
+	margin-right: 60px;
+}
+
+
+Идем к следующему блоку. Он очень простой. Все данные берем с макета.
+Для кнопки используем стандартный стиль тольок меняем цвет текста и стрелочки
+
+<section class="about__company">
+			<div class="container">
+					<div class="about__company-item">
+				<div class="about__company-title">
+					О компании
+				</div>
+
+				<div class="about__company-text">
+					Компания специализируется на оказании услуг в сфере корпоративного права, налогового консалтинга, представительства в судах, ликвидации и банкротства предприятий. На сегодняшний день, коллектив компании объединяет 
+					высокопрофессиональных экспертов имеющих 
+				</div>
+
+				<div class="about__company-btn default-btn">
+					<a href="#">Узнать больше</a>
+				</div>
+					</div>
+			</div>
+		</section>
+
+
+
+.about__company {
+	background-image: url(../img/about__company-fon.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	min-height: 300px;
+}
+
+.about__company-item {
+	padding: 35px 0 50px 0;
+	max-width: 555px;
+}
+
+.about__company-title {
+	font-family: 'Roboto', sans-serif;
+	font-size: 24px;
+	line-height: 24px;
+	color: #ffffff;
+	margin-bottom: 20px;
+	font-weight: 500;
+}
+
+.about__company-text {
+	font-size: 14px;
+	line-height: 24px;
+	letter-spacing: 0.1px;
+	color: #d3d2d2;
+	padding-bottom: 35px;
+}
+
+.about__company-btn {
+	display: inline-block;
+}
+
+.about__company-btn a{
+	color: #ffffff;
+}
+
+.about__company-btn:after {
+	color: #303030;
+}
+
+Делаем следующий блок
+Делаем html склелет
+
+		<section class="form">
+			<div class="container">
+				<div class="form__inner">
+					<div class="form__title-box">
+						<div class="form-title">
+							Получить Консультацию
+						</div>
+						<div class="form__text">
+							Комплексный подход к вашему вопросу, своевременная правовую помощь, представление интересов во всех судебных инстанциях.
+						</div>
+					</div>
+					<div class="form__box">
+						<form>
+							<div class="form__box-inner">
+								<div class="form__box-left">
+									<label>
+										E-mail
+										<input type="text">
+									</label>
+
+									<label>
+										Контактный телефон
+										<input type="text">
+									</label>
+
+									<label>
+										ФИО
+										<input type="text">
+									</label>
+
+									<label>
+										Тема вопроса
+										<select>
+											<option></option>
+											<option></option>
+											<option></option>
+											<option></option>
+										</select>
+									</label>
+								</div>
+
+								<div class="form__box-right">
+									<label>
+										Сообщение
+										<textarea></textarea>
+									</label>
+									<button type="submit">Получить консультацию</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+
+Шапку с полосой мы уже делали и просто дописываем
+
+.about__title-box{
+	max-width: 520px;
+	padding-left: 140px;
+	position: relative;
+}
+
+.about__title-box:before{
+	content:"";
+	position: absolute;
+	width: 105px;
+	height: 2px;
+	background-color:#ffc222;
+	left:0;
+	top: 11px;
+}
+
+через запятую дописываем наши стили
+
+.about__title-box,
+.form__title-box
+{
+	max-width: 520px;
+	padding-left: 140px;
+	position: relative;
+}
+
+.about__title-box:before,
+.form__title-box:before
+{
+	content:"";
+	position: absolute;
+	width: 105px;
+	height: 2px;
+	background-color:#ffc222;
+	left:0;
+	top: 11px;
+}
+
+.about-title,
+.form__title
+ {
+	font-size: 24px;
+	font-weight: 500;
+	font-family: 'Roboto', sans-serif;
+	line-height: 24px;
+	color:#212020;
+	margin-bottom: 10px;
+
+
+}
+
+.about__text,
+.form__text {
+	letter-spacing: 0.1px;
+}
+
+В итоге получаем такую же шапку как и раньше. главное правильно задать скелет и все заработает
+Теперь вставим девушку. Мы хотим чтобы она была прижата к низу экрана, значит мы в form__inner 
+
+.form__inner {
+	padding-bottom: 40px;
+	background-image: url(../img/form-fon.png);
+	min-height: 460px;
+	background-repeat: no-repeat;
+	background-position: bottom right;
+}
+
+Переходим к форме
+Задаем ей ширину
+.form__box {
+	max-width: 850px;
+
+}
+
+Идем во внутренний контейнер. В нем лежит еще два, левая и правая часть формы. Разделяем их display flex
+.form__box-inner {
+	display: flex;
+	justify-content: space-between;
+}
+
+Задаем блокам ширину с макета
+
+.form__box-left {
+	max-width: 260px;
+	width: 100%;
+}
+
+.form__box-right {
+	max-width: 555px;
+	width: 100%;
+}
+
+Пропишем общие свойства какие можем
+
+.form__box-inner label,
+.form__box-inner input,
+.form__box-inner textarea,
+.form__box-inner select{
+	display: block;
+	width: 100%;
+}
+
+.form__box-inner label {
+	line-height: 36px;
+	color: #282828;
+	font-family: 'Roboto', sans-serif;
+ 
+}
+
+.form__box-inner input {
+	margin-bottom: 8px;
+	outline: none;
+	height: 40px;
+	border: 1px solid #e6e6e6;
+	padding: 0 10px;	
+}
+
+.form__box-inner select {
+	outline: none;
+	height: 40px;
+	border: 1px solid #e6e6e6;	
+	padding-left: 17px;
+}
+
+Чтобы стилизовать стрелочку у селекта нам придется спрятать старую и сделать поверх нужную нам. Но мы будем использовать плагин
+Однако сначала достилим все что осталось. Для текста пишем
+
+.form__box-inner textarea {
+	outline: none;
+	border: 1px solid #e6e6e6;	
+	padding-left: 17px;
+	height: 207px;
+	resize: none;	
+	margin-bottom: 40px;
+}
+Для кнопки в скелете добавим default-btn класс и будем допиливать сами
+
+<button type="submit" class="default-btn">Получить консультацию</button>
+
+После этого добавляем 
+
+
+.form__box-right button {
+	background-color: transparent;
+	color: #282828;
+	float: right;
+}
+
+Теперь поменяем стилизацию селекта. Будем использовать jquery form styler
+Качаем архив, закидываем файлы из папки dist по нашим css and js папкам и подключаем
+Теперь переходим в main js и прописываем
+$('select').styler()
+
+Теперь в просмотре кода находим во что обернут наш select 
+В данном случае это jq-selectbox jqselect
+поэтому в стилях к ним зададим что когда встречаются .form__box-inner и .jq-selectbox.jqselect, то 
+
+.form__box-inner .jq-selectbox.jqselect {
+	display: block;
+	width: 100%;
+
+}
+
+потом ищем также div который отвечает за высоту и все такое и начинаем его править 
+.form__box-inner .jq-selectbox__select
+.form__box-inner .jq-selectbox.jqselect {
+	display: block;
+	width: 100%;
+}
+
+.form__box-inner .jq-selectbox__select {
+	outline: none;
+	height: 40px;
+	border: 1px solid #e6e6e6;	
+	background: transparent;
+	border: 1px solid #e6e6e6;	
+	border-radius: 0;
+	box-shadow: none;
+}
+
+Также находим тругольничек на селекте в просмотре кода
+jq-selectbox__trigger-arrow
+
+.form__box-inner .jq-selectbox__trigger-arrow:before {
+	content: "\f105";
+	font-family: 'icomoon' !important;
+	position: absolute;
+	transform: translateY(-50%);
+}
+
+теперь отключаем файл css  с темами этого плагина и дописываем наши стили, даже переделываем их
+.form__box-inner .jq-selectbox__select {
+	outline: none;
+	height: 40px;
+	border: 1px solid #e6e6e6;
+
+
+	box-shadow: none;
+}
+
+.form__box-inner .jq-selectbox__trigger-arrow:before {
+	content: "\f105";
+	font-family: 'icomoon' !important;
+	position: absolute;
+	transform: translateY(-50%);
+	right: 0;
+	top: 0;
+	transform: rotate(90deg);	
+		padding-left: 17px;
+}
+
+Раскрываем список (его может быть не видно, но он открывается) можно на время подключить ксс темы чтобы увидеть
+запоминаем классы выбора из селекта и стилизуем
+В файлике с темами отключенном находим li копируем оттуда их и редачим
+.jq-selectbox ul {
+	margin: 0;
+	padding: 0;
+}
+.jq-selectbox li {
+	min-height: 18px;
+	padding: 5px 10px 6px;
+	color: #231F20;
+}
+.jq-selectbox li.selected {
+	background-color: #A3ABB1;
+	color: #FFF;
+}
+.jq-selectbox li:hover {
+	background-color: #08C;
+	color: #FFF;
+}
+.jq-selectbox li.disabled {
+	color: #AAA;
+}
+.jq-selectbox li.disabled:hover {
+	background: none;
+}
+.jq-selectbox li.optgroup {
+	font-weight: bold;
+}
+.jq-selectbox li.optgroup:hover {
+	background: none;
+	color: #231F20;
+	cursor: default;
+}
+.jq-selectbox li.option {
+	padding-left: 25px;
+}
+
+Редачим так
+.form__box-inner .jq-selectbox li {
+	min-height: 18px;
+	padding: 5px 17px 6px;
+	color: #231F20;
+}
+.form__box-inner .jq-selectbox li.selected {
+	background-color: #A3ABB1;
+	color: #FFF;
+}
+.form__box-inner .jq-selectbox li:hover {
+	background-color: #08C;
+	color: #FFF;
+}
+.form__box-inner .jq-selectbox li.disabled {
+	color: #AAA;
+}
+.form__box-inner .jq-selectbox li.disabled:hover {
+	background: none;
+}
+.form__box-inner .jq-selectbox li.optgroup {
+	font-weight: bold;
+}
+.form__box-inner .jq-selectbox li.optgroup:hover {
+	background: none;
+	color: #231F20;
+	cursor: default;
+}
+.form__box-inner .jq-selectbox li.option {
+	padding-left: 25px;
+}
+
+И итоговые стили получились 
+
+
+.form__inner {
+	padding-bottom: 40px;
+	background-image: url(../img/form-fon.png);
+	min-height: 460px;
+	background-repeat: no-repeat;
+	background-position: bottom right;
+}
+
+.form__box {
+	max-width: 850px;
+	padding-top: 45px;
+}
+
+.form__box-inner {
+	display: flex;
+	justify-content: space-between;
+}
+
+.form__box-left {
+	max-width: 260px;
+	width: 100%;
+}
+
+.form__box-right {
+	max-width: 555px;
+	width: 100%;
+}
+
+.form__box-inner label,
+.form__box-inner input,
+.form__box-inner textarea,
+.form__box-inner select{
+	display: block;
+	width: 100%;
+}
+
+.form__box-inner label {
+	line-height: 36px;
+	color: #282828;
+	font-family: 'Roboto', sans-serif;
+ 
+}
+
+.form__box-inner input {
+	margin-bottom: 8px;
+	outline: none;
+	height: 40px;
+	border: 1px solid #e6e6e6;
+	padding: 0 10px;	
+}
+
+.form__box-inner select {
+	outline: none;
+	height: 40px;
+	border: 1px solid #e6e6e6;	
+	padding-left: 17px;
+}
+
+.form__box-inner textarea {
+	outline: none;
+	border: 1px solid #e6e6e6;	
+	padding-left: 17px;
+	height: 207px;
+	resize: none;	
+	margin-bottom: 40px;
+}
+
+.form__box-right button {
+	background-color: transparent;
+	color: #282828;
+	float: right;
+}
+
+.form__box-inner .jq-selectbox.jqselect {
+	display: block;
+	width: 100%;
+}
+
+.form__box-inner .jq-selectbox__select {
+	outline: none;
+	height: 40px;
+	border: 1px solid #e6e6e6;
+	padding-left: 17px;
+	box-shadow: none;
+}
+
+.form__box-inner .jq-selectbox__trigger-arrow:before {
+	content: "\f105";
+	font-family: 'icomoon' !important;
+	position: absolute;
+	transform: translateY(-50%);
+	right: 17px;
+	top: 0;
+	transform: rotate(90deg);
+}
+
+.form__box-inner .jq-selectbox__dropdown {
+	width: 100%;
+	margin: 2px 0 0;
+	padding: 0;
+	border: 1px solid #e6e6e6;
+	background: #fff;
+}
+
+.form__box-inner .jq-selectbox li {
+	min-height: 18px;
+	padding: 5px 17px 6px;
+	color: #231F20;
+}
+.form__box-inner .jq-selectbox li.selected {
+	background-color: #A3ABB1;
+	color: #FFF;
+}
+.form__box-inner .jq-selectbox li:hover {
+	background-color: #08C;
+	color: #FFF;
+}
+.form__box-inner .jq-selectbox li.disabled {
+	color: #AAA;
+}
+.form__box-inner .jq-selectbox li.disabled:hover {
+	background: none;
+}
+.form__box-inner .jq-selectbox li.optgroup {
+	font-weight: bold;
+}
+.form__box-inner .jq-selectbox li.optgroup:hover {
+	background: none;
+	color: #231F20;
+	cursor: default;
+}
+.form__box-inner .jq-selectbox li.option {
+	padding-left: 25px;
+}
+
+Следующий блок простой, покажу только код
+
+		<section class="advantages">
+			<div class="container">
+				<div class="advantages__inner">
+					<div class="advantages-item">
+						<div class="advantages__title">
+							Десятки добровольных ликвидаций ежемесячно
+						</div>
+						<div class="advantages__text">
+							Мы умеем минимизировать все риски в процессе добровольной ликвидации юридических лиц.
+						</div>
+					</div>
+
+					<div class="advantages-item">
+						<div class="advantages__title">
+							Отличное знание законов в сфере банкротства 
+						</div>
+						<div class="advantages__text">
+							Позволяют нам эффективно отстаивать как интересы кредиторов, так и интересы собственников проблемной организации.
+						</div>
+					</div>
+
+					<div class="advantages-item">
+						<div class="advantages__title">
+							Большой опыт сопровождения банкротства
+						</div>
+						<div class="advantages__text">
+							Мы обладаем большим опытом сопровождения процедур банкротства предприятий.
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+
+		.advantages {
+	padding: 55px 0 40px 0;
+	background-image: url(../img/advantages-fon.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	min-height: 285px;
+	background-size: cover;
+}
+
+.advantages__inner {
+	color: #fff;
+	display: flex;
+	justify-content: space-between;
+	text-align: center;
+	padding: 0 20px;
+}
+.advantages-item {
+	max-width: 360px;
+}
+
+.advantages__title {
+	font-family: 'Roboto', sans-serif;
+	font-size: 18px;
+	line-height: 24px;
+	font-weight: 500;
+	padding: 60px 0 15px;
+	position: relative;
+}
+
+.advantages__text {
+	color: #d3d2d2;
+	line-height: 24px;
+	letter-spacing: 0.1px;
+}
+
+.advantages__title:before {
+	position: absolute;
+	content: "";
+	width: 40px;
+	height: 40px;
+	border: 2px solid #ffc222;
+	top: 0;
+	left: 50%; 
+	transform: translate(-50%);
+}
+
+.advantages__title:after {
+	position: absolute;
+	content: "\f00c";
+	font-family: 'icomoon' !important;
+	font-size: 14px;
+	top: 9px;
+	left: 50%; 
+	transform: translate(-50%);
+}
+
+
+Начало следующего блока уже написано, нужно только сделать такую же верстку и подредактировать стили, дописать через запятую свои аналогичные
+
+
+
+<section class="news">
+			<div class="container">
+				<div class="news__top">
+					<div class="news__title-box">
+						<div class="news-title">
+							Новости кампании
+						</div>
+						<div class="news__text">
+							Комплексный подход к вашему вопросу, своевременная правовую помощь, представление интересов во всех судебных инстанциях.
+						</div>
+					</div>
+					<div class="news__btn">
+						<a href="#">
+							Открыть все новости
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+
+.about__top,
+.news__top{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 60px;
+}
+
+.about__title-box,
+.form__title-box,
+.news__title-box
+{
+	max-width: 520px;
+	padding-left: 140px;
+	position: relative;
+}
+
+.about__title-box:before,
+.form__title-box:before,
+.news__title-box:before
+{
+	content:"";
+	position: absolute;
+	width: 105px;
+	height: 2px;
+	background-color:#ffc222;
+	left:0;
+	top: 11px;
+}
+
+.about-title,
+.form__title,
+.news-title
+ {
+	font-size: 24px;
+	font-weight: 500;
+	font-family: 'Roboto', sans-serif;
+	line-height: 24px;
+	color:#212020;
+	margin-bottom: 10px;
+
+
+}
+
+.about__text,
+.form__text,
+.news__text {
+	letter-spacing: 0.1px;
+}
+
+.about__btn a,
+.news__btn a{
+	color: #373636;
+	line-height: 24px;
+	letter-spacing: 0.25px;
+	padding: 5px 38px;
+	border: 3px solid #e6e6e6;
+}
+
+Идем делать слайдер
+Делаем скелет слайдера 
+					<div class="news__slider">
+						<div class="news__slider-inner">
+							<div class="news__slider-item">
+								<div class="news__slider-title">
+								Банкротство и ликвидация предприятия в Украине	
+								</div>
+								<div class="news__slider-text">
+								«На сегодняшний день, коллектив компании объединяет высокопрофессиональных экспертов имеющих специализации в отдельных областях права. На сегодняшний день, коллектив компании объединяет высокопрофессиональных экспертов имеющих специализации в отдельных областях права. На сегодняшний день, коллектив компании объединяет высокопрофессиональных экспертов имеющих специализации в отдельных областях права...»	
+								</div>
+								<div class="news__slider-author">
+								Андрей Ворошилов, генеральный д иректор компании Bankom	
+								</div>
+							</div>
+
+							<div class="news__slider-item">
+								<div class="news__slider-title">
+								Банкротство и ликвидация предприятия в Украине	
+								</div>
+								<div class="news__slider-text">
+								«На сегодняшний день, коллектив компании объединяет высокопрофессиональных экспертов имеющих специализации в отдельных областях права. На сегодняшний день, коллектив компании объединяет высокопрофессиональных экспертов имеющих специализации в отдельных областях права. На сегодняшний день, коллектив компании объединяет высокопрофессиональных экспертов имеющих специализации в отдельных областях права...»	
+								</div>
+								<div class="news__slider-author">
+								Андрей Ворошилов, генеральный д иректор компании Bankom	
+								</div>
+							</div>
+
+							<div class="news__slider-item">
+								<div class="news__slider-title">
+								Банкротство и ликвидация предприятия в Украине	
+								</div>
+								<div class="news__slider-text">
+								«На сегодняшний день, коллектив компании объединяет высокопрофессиональных экспертов имеющих специализации в отдельных областях права. На сегодняшний день, коллектив компании объединяет высокопрофессиональных экспертов имеющих специализации в отдельных областях права. На сегодняшний день, коллектив компании объединяет высокопрофессиональных экспертов имеющих специализации в отдельных областях права...»	
+								</div>
+								<div class="news__slider-author">
+								Андрей Ворошилов, генеральный д иректор компании Bankom	
+								</div>
+							</div>
+						</div>
+					</div>
+
+В main дописываем 
+$(function(){
+	$(".slider__inner, .news__slider-inner").slick({
+		nextArrow: '<button type="button" class="slick-btn slick-next"></button>',
+		prevArrow: '<button type="button" class="slick-btn slick-prev"></button>',
+		infinite: false,
+	});
+Немного стилим слайдер 
+.news {
+	padding: 55px 0 110px;	
+	background-color: #f9f9f9;
+}
+
+.news__inner {
+	display: flex;
+	justify-content: space-between;
+}
+
+.news__slider {
+	max-width: 555px;
+	width: 100%;
+	background-color: #fff;
+	 box-shadow: 0px 5px 15.36px 0.64px rgba(128, 127, 127, 0.13);
+}
+
+
+
+Добавляем стили к  блогу 					
+
+.news {
+	padding: 55px 0 110px;	
+	background-color: #f9f9f9;
+}
+
+.news__inner {
+	display: flex;
+	justify-content: space-between;
+}
+
+.news__slider {
+	max-width: 555px;
+	width: 100%;
+	background-color: #fff;
+}
+
+.news__blog {
+	max-width: 260px;
+	width: 100%;	
+}
+
+.news__images {
+position: relative;
+}
+
+.news__date {
+	background-color: #ffc222;
+	width: 50px;
+	height: 55px;
+	position: absolute;
+	color: #fff;
+	text-align: center;
+	padding-top: 30px;
+	font-weight: 700;
+	top: 0;
+	left: 10px;
+}
+
+.news__blog-title {
+	font-size: 16px;
+	font-weight: 500;
+	font-family: 'Roboto', sans-serif;
+	color: #242424;
+	letter-spacing: 0.5px;
+	padding: 12px 0;
+}
+
+.news__blog-text {
+	letter-spacing: 0.1px;
+	color: #5e5e5e;
+}
